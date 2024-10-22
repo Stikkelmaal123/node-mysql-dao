@@ -1,26 +1,20 @@
-// Mocking a database with an array of users
-const users = [
-  {
-    id:    1,
-    name:  'John Doe',
-    email: 'john@doe.com',
-  },
-  {
-    id:    2,
-    name:  'Jane Doe',
-    email: 'jane@doe.com',
-  },
-];
+const db = require('../config/db.js');
+
 
 exports.getAllUsers = async () => {
-  return users;
+  const [rows, fields] = await db.query('SELECT id, name, email, age, height FROM Users');
+  return rows;
 };
 
 exports.getUserById = async (id) => {
-  return users.find(user => user.id === id);
-}
+};
 
 exports.createUser = async (user) => {
-  users.push(user);
-  return user;
+  const [result] = await db.execute(`
+    INSERT INTO Users 
+    (name, email, age, height) 
+    VALUES
+    (?,?,?,?);
+    `, [user.name, user.email, user.age, user.height]);
+  return result;
 };

@@ -12,8 +12,8 @@ exports.getAllUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { name, email } = req.body;
-    const users = await UserModel.createUser({ name, email });
+    const { name, email, age, height } = req.body;
+    const users = await UserModel.createUser({ name, email, age, height });
     res.redirect('/');
   } catch(e) {
     console.log(e);
